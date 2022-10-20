@@ -51,15 +51,15 @@ addStatueForm.addEventListener('submit', (e) => {
 })
 
 // methode 2: volgens documentatie
-addStatueForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+// addStatueForm.addEventListener('submit', async (e) => {
+//   e.preventDefault();
 
-  await addDoc(collectionRef, {
-    species: addStatueForm.species.value,
-    "production-year": addStatueForm.productionYear.value,
-  })
-  addStatueForm.reset();
-})
+//   await addDoc(collectionRef, {
+//     species: addStatueForm.species.value,
+//     "production-year": addStatueForm.productionYear.value,
+//   })
+//   addStatueForm.reset();
+// })
 
 
 // deleting docs
@@ -77,9 +77,9 @@ deleteStatueForm.addEventListener('submit', (e) => {
 })
 
 // methode 2
-deleteStatueForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+// deleteStatueForm.addEventListener('submit', async (e) => {
+//   e.preventDefault();
 
-  await deleteDoc(doc(db, 'owl-statues', deleteStatueForm.id.value));
-  deleteStatueForm.reset()
-})
+//   await deleteDoc(doc(db, 'owl-statues', deleteStatueForm.id.value));
+//   deleteStatueForm.reset()
+// })
