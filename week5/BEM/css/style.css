@@ -1,0 +1,14 @@
+.card{
+    width: 30vw;
+    height: 10vh;
+}
+
+.button__card{
+    font-weight: 600;
+}
+
+.button{
+    width: 40px;
+    height: 25px;    
+    background: red;
+}
