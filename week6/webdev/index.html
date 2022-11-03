@@ -1,0 +1,27 @@
+<script>
+  let total = [];
+  for (let index = 0; index < 10  ; index++) {
+    
+    fetch(
+      "https://quizapi.io/api/v1/questions?apiKey=iMKn8scwvVOmIc1InubjhXMW8XjRl4XXznHmFBJp&limit=20"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        total += data.map((data) => {console.log(data.category)});
+        console.log(data);
+      })
+  }
+</script>
+
+
+
+
+<!-- 
+<script>
+  let answer_wrapper = document.createElement("div");
+  answer_wrapper.classList = "option";
+  let answer = document.createElement("span");
+  answer.textContent = answer;
+  answer_wrapper.appendChild(answer);
+  option_list.appendChild(answer_wrapper);
+</script> -->
