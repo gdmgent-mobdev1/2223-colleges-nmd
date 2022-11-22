@@ -1,0 +1,12 @@
+"use strict";
+exports.__esModule = true;
+var Book_1 = require("./lib/Book");
+var Booklist_1 = require("./lib/Booklist");
+var book = new Book_1.Book("Het Dolfijnenkind", "fsf", "fsdfsd");
+var book1 = new Book_1.Book("Het Dolfijnenkind 1", "fsf", "fsdfsd");
+var book2 = new Book_1.Book("Het Dolfijnenkind 2", "fsf", "fsdfsd");
+var myBookList = new Booklist_1.Booklist([book, book1, book2]);
+console.log(myBookList.bookList[myBookList.currBook]);
+myBookList.finishCurrentBook();
+console.log(myBookList.currBook);
+console.log(myBookList.bookList[myBookList.currBook]);
