@@ -8,7 +8,7 @@ const addTodoListButton = document.getElementById('addTodoListButton') as HTMLEl
 
 addTodoListButton.addEventListener('click', () => {
   if (addTodoListInput.value.trim() !== '') {
-    new TodoList(document.getElementById('app') as HTMLElement, addTodoListInput.value);
+    new TodoList(root, addTodoListInput.value);
     addTodoListInput.value = '';
   }
 });

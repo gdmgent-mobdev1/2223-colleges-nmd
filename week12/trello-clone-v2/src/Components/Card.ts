@@ -86,53 +86,53 @@ export default class Card {
 
   showMenu(): void {
     // Create elements
-    const menu = document.createElement('div');
-    const menuContainer = document.createElement('div');
-    const menuTitle = document.createElement('div');
-    const menuDescription = document.createElement('div');
-    const commentsInput = document.createElement('input');
-    const commentsButton = document.createElement('button');
-    const menuComments = document.createElement('div');
+    this.menu = document.createElement('div');
+    this.menuContainer = document.createElement('div');
+    this.menuTitle = document.createElement('div');
+    this.menuDescription = document.createElement('div');
+    this.commentsInput = document.createElement('input');
+    this.commentsButton = document.createElement('button');
+    this.menuComments = document.createElement('div');
 
     // Add class names
-    menu.className = 'menu';
-    menuContainer.className = 'menuContainer';
-    menuTitle.className = 'menuTitle';
-    menuDescription.className = 'menuDescription';
-    menuComments.className = 'menuComments';
-    commentsInput.className = 'commentsInput comment';
-    commentsButton.className = 'commentsButton btn-save';
+    this.menu.className = 'menu';
+    this.menuContainer.className = 'menuContainer';
+    this.menuTitle.className = 'menuTitle';
+    this.menuDescription.className = 'menuDescription';
+    this.menuComments.className = 'menuComments';
+    this.commentsInput.className = 'commentsInput comment';
+    this.commentsButton.className = 'commentsButton btn-save';
 
     // Add inner Text
-    commentsButton.innerText = 'Add';
-    commentsInput.placeholder = 'Write a comment...';
+    this.commentsButton.innerText = 'Add';
+    this.commentsInput.placeholder = 'Write a comment...';
 
     // Event listeners
-    menuContainer.addEventListener('click', (e: MouseEvent) => {
-      if ((e.target as HTMLElement).classList.contains('menuContainer') && (menuContainer != null)) {
-        menuContainer.remove();
+    this.menuContainer.addEventListener('click', (e: MouseEvent) => {
+      if ((e.target as HTMLElement).classList.contains('menuContainer') && (this.menuContainer != null)) {
+        this.menuContainer?.remove();
       }
     });
 
-    commentsButton.addEventListener('click', () => {
-      if (commentsInput?.value !== '' && (commentsInput != null)) {
-        this.state.comments?.push(commentsInput.value);
+    this.commentsButton.addEventListener('click', () => {
+      if (this.commentsInput?.value !== '' && (this.commentsInput != null)) {
+        this.state.comments?.push(this.commentsInput.value);
         this.renderComments();
-        commentsInput.value = '';
+        this.commentsInput.value = '';
       }
     });
 
     // Append
-    menu.append(menuTitle);
-    menu.append(menuDescription);
-    menu.append(commentsInput);
-    menu.append(commentsButton);
-    menu.append(menuComments);
-    menuContainer.append(menu);
-    root.append(menuContainer);
+    this.menu.append(this.menuTitle);
+    this.menu.append(this.menuDescription);
+    this.menu.append(this.commentsInput);
+    this.menu.append(this.commentsButton);
+    this.menu.append(this.menuComments);
+    this.menuContainer.append(this.menu);
+    root.append(this.menuContainer);
 
-    this.editableDescription = new EditableText(this.state.description, menuDescription, this, 'description', 'textarea');
-    this.editableTitle = new EditableText(this.state.text, menuTitle, this, 'text', 'input');
+    this.editableDescription = new EditableText(this.state.description, this.menuDescription, this, 'description', 'textarea');
+    this.editableTitle = new EditableText(this.state.text, this.menuTitle, this, 'text', 'input');
 
     this.renderComments();
   }
