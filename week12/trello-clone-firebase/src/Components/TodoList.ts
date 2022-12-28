@@ -1,7 +1,7 @@
-import { FirebaseError } from 'firebase/app';
 import { v4 as uuidv4 } from 'uuid';
 
 import { dragoverHandler, dropHandler } from '../Lib/dragAndDrop';
+import { addTodoFirebase, deleteTodoListFirebase } from '../lib/firebase-init';
 // eslint-disable-next-line import/no-cycle
 import Card from './Card';
 
@@ -34,12 +34,12 @@ export default class TodoList {
     this.render();
   }
 
-  addToDo(): void {
+  async addToDo() {
     if (this.input instanceof HTMLInputElement && this.div instanceof HTMLDivElement) {
       const text = this.input.value;
-      const newCard = new Card(text, this.div, this)
-      this.cardArray.push(newCard);
-      firebase.addTodo(newCard)
+      const cardId = await addTodoFirebase(text, this.id);
+      const newCard = new Card(text, this.div, this, cardId, this.id)
+      this.cardArray.push(newCard); 
     }
   }
 
@@ -77,6 +77,11 @@ export default class TodoList {
         this.input!.value = '';
       }
     });
+    this.deleteButton.addEventListener('click', () => {
+      deleteTodoListFirebase(this.id);
+      document.querySelector(`#${this.id}`)?.remove();
+    });
+    
 
     // Append elements to the to-do list element
     this.todoListElement.append(this.h2);

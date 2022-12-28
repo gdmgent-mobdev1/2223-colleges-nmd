@@ -1,11 +1,14 @@
 /* eslint-disable no-new */
 import { Card, TodoList } from './Components';
-import { root } from './Lib';
+import { State, root } from './Lib';
 
 // import firestore
-import { fireStoreApp } from './lib/firebase-init';
+import { fireStoreDb } from './lib/firebase-init';
 import {
-  getFirestore, collection, getDocs, onSnapshot, addDoc
+  collection, 
+  getDocs, 
+  onSnapshot, 
+  addDoc
 } from "firebase/firestore";
 // import localstorage from './Lib/localStorage';
 // -------------main------------
@@ -23,35 +26,42 @@ const addTodoListFirebase = async (title: string) => {
 
 addTodoListButton.addEventListener('click', async() => {
   if (addTodoListInput.value.trim() !== '') {
-    const id = await addTodoListFirebase(addTodoListInput.value);
+    await addTodoListFirebase(addTodoListInput.value);
     // new TodoList(root, addTodoListInput.value, id);
     
     addTodoListInput.value = '';
   }
 });
 
-const getCards = async (id: string) => {
-  const cardsSnapShot = collection(db, `lists/${id}/cards`);
+const getCards = async (id: string)=> {
+  const cardsSnapShot = collection(fireStoreDb, `lists/${id}/cards`);
   const qSnap = await getDocs(cardsSnapShot);
-  return qSnap.docs.map(d => ({id: d.id, ...d.data()}));
+  return qSnap.docs.map(d => (
+    {
+      id: d.id, 
+      title: d.data().title, 
+      description: d.data().description, 
+      comments: d.data().comments,
+      parentId: d.data().parentId
+    }
+    ));
 }
 
-const createTodoList = ({id, cards, title}: { id: string; cards: {id: string}[], title: string} )  => {
+const createTodoList = ({id, cards, title}: { id: string; cards: State[], title: string} )  => {
   let newList: TodoList = new TodoList(root, title, id);
   
-  cards.forEach((card) => {
-          new Card(title, newList.div as HTMLElement, newList);
+  cards.forEach((card: State) => {
+          new Card(card.title, newList.div as HTMLElement, newList, card.id, id);
           // newList.addToDo();
         }
     )
 }
 
-// get data from firestore
-const db = getFirestore(fireStoreApp);
+
 
 // select collection
 // We willen nu referen naar onze collectie `owl-statues`
-const colRef = collection(db, 'lists');
+const colRef = collection(fireStoreDb, 'lists');
 // get data
 onSnapshot(colRef, (snapshot) => {
   snapshot.docChanges().forEach(async (change) => {
@@ -61,7 +71,7 @@ onSnapshot(colRef, (snapshot) => {
         const cards = await getCards(change.doc.id);
         const id = change.doc.id;
         const title = change.doc.data().title;
-        createTodoList({title, id: id,  cards, ...change.doc.data() });
+        createTodoList({title, id: id, cards, ...change.doc.data() });
       // });
     }
     if (change.type === "modified") {
